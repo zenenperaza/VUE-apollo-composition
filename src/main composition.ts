@@ -1,7 +1,7 @@
 import { createApp, provide, h } from 'vue'
 import App from './App.vue'
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client/core";
-import { createApolloProvider } from "@vue/apollo-option";
+import { DefaultApolloClient } from "@vue/apollo-composable";
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
@@ -14,10 +14,9 @@ const apolloClient = new ApolloClient({
     cache
 })
 
-const apolloProvider = createApolloProvider({
-    defaultClient: apolloClient, 
-})
-
 createApp({
-     render: () => h(App), 
-}).use(apolloProvider).mount('#app')
+    setup(){
+        provide(DefaultApolloClient, apolloClient)
+    },
+    render: () => h(App), 
+}).mount('#app')
