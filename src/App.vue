@@ -9,8 +9,7 @@
    import { defineComponent, watch, ref } from "vue";
    import { useSubscription } from "@vue/apollo-composable";
    import gql from 'graphql-tag'
-
-
+   
    export default defineComponent({
     setup(){
         const comments = ref([])
@@ -34,7 +33,3 @@
     }
    })
 </script>
-
-<style scoped>
-
-</style>

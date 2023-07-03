@@ -5,6 +5,7 @@ import { DefaultApolloClient } from "@vue/apollo-composable";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
+
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
 })
@@ -17,7 +18,7 @@ const wsLink = new WebSocketLink({
 })
 
 const link = split(
-    ({query}) => {
+    ({ query }) => {
     const definition = getMainDefinition(query)
     return (
         definition.kind === "OperationDefinition" && definition.operation === "subscription"
@@ -25,7 +26,6 @@ const link = split(
 },
 wsLink,
 httpLink
-
 )
 
 const cache = new InMemoryCache()
