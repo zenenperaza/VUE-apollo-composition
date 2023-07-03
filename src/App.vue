@@ -8,11 +8,11 @@ import { useQuery } from "@vue/apollo-composable";
 import gpl from 'graphql-tag'
 
 export default defineComponent({
-  setup(){
+  setup() {
     const {result, loading, error} = useQuery(gpl`
     query {
-      getAllComments{
-        neme
+      getAllComments {
+        name
         text
       }
     }
