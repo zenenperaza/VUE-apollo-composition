@@ -36,3 +36,8 @@ npm i --save graphql graphql-tag @apollo/client
 ```
  npm i --save @vue/apollo-option
 ```
+
+##  Instalar subscriptions-transport-ws
+```
+ npm i subscriptions-transport-ws
+```
