@@ -14,13 +14,10 @@
 <button v-on:click="refetch()">Refresh</button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { useQuery, useLazyQuery } from "@vue/apollo-composable";
 import gpl from 'graphql-tag'
 
-export default defineComponent({
-  setup() {
     const {result, loading, error, refetch, onResult, onError} = useQuery(gpl`
     query GetCommentsFromUser($name: String!) {
     getCommentsFromUser(name: $name) {
@@ -48,11 +45,7 @@ export default defineComponent({
     })
 
 
-    return {
-      result, loading, error, refetch
-    }
-  }
-})
+
 </script>
 
 <style>
