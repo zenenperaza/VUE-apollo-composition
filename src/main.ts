@@ -4,18 +4,25 @@ import { ApolloClient, createHttpLink, InMemoryCache, split } from "@apollo/clie
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
-
+import { createClient } from "graphql-ws";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql'
 })
 
-const wsLink = new WebSocketLink({
-    uri: 'ws://localhost:4000/graphql',
-    options: {
-        reconnect: true
-    }
-})
+const wsLink = new GraphQLWsLink(
+    createClient({
+      url: "ws://localhost:4000/graphql",
+    })
+  )
+
+// const wsLink = new WebSocketLink({
+//     uri: 'ws://localhost:4000/graphql',
+//     options: {
+//         reconnect: true
+//     }
+// })
 
 const link = split(
     ({ query }) => {

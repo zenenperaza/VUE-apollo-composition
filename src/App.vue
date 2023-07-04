@@ -12,7 +12,8 @@
    
    export default defineComponent({
     setup(){
-        const comments = ref([])
+        const comments = ref<any>([])
+        
         const { result } = useSubscription(gql`
         subscription {
         commentCreated {
