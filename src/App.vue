@@ -1,36 +1,39 @@
 <template>
-    <h3>Notification</h3>
-<ul>
-    <li v-for="(comment, index) of comments" :key="index"> <b>{{ comment.name }}</b>: {{ comment.text }} </li>
-</ul>
+<div> 
+    <button v-on:click="createComment()">Send message</button>
+</div>
 </template>
 
 <script lang="ts" >
-   import { defineComponent, watch, ref } from "vue";
-   import { useSubscription } from "@vue/apollo-composable";
-   import gql from 'graphql-tag'
-   
-   export default defineComponent({
+import { useMutation } from "@vue/apollo-composable";
+import { defineComponent } from "vue";
+import gql from 'graphql-tag'
+
+export default defineComponent({
     setup(){
-        const comments = ref<any>([])
-        
-        const { result } = useSubscription(gql`
-        subscription {
-        commentCreated {
-            name
-            text
+        const { mutate: createComment } = useMutation(gql`
+        mutation ($name: String!, $text: String!) {
+            createComment(name: $name, text: $text)
         }
-        }
-        `)
-        watch(
-            result,
-            data => { 
-                comments.value.push(data.commentCreated);
-             }
-        )
+        `, () => ({
+            variables: {
+                name: 'Zenen Alexis Peraza Gil', 
+                text: 'hola desde VUE con variables'
+            }
+        }))
+
+
+
+
+
         return {
-            comments
+            createComment
         }
     }
-   })
+})
+   
 </script>
+
+<style scoped>
+
+</style>
