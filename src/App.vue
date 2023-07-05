@@ -1,12 +1,7 @@
 <template>
-<div><h1>Comments</h1>
-    <div v-if="$apollo.queries.comments.loading"> 
-        <h3>Loading...</h3>
-    </div>
-    <ul v-else>
-        <li v-for="(comment, index) in comments" :key="index"><b>{{ comment.name }}:</b> {{ comment.text }} </li>
-    </ul>
-
+<div><h1>Mutations</h1>
+   
+<button v-on:click="addComment()">Add comments</button>
 </div>
 </template>
 
@@ -15,32 +10,24 @@ import { defineComponent } from 'vue';
 import gql from 'graphql-tag';
 
 export default defineComponent({
-    apollo: {
-        comments: {
-            query: gql`
-            query($name: String!)  {
-                comments: getCommentsFromUser(name: $name) {
-                    text
-                    name
-                }
-            }
-            `,
-            variables (){
-                return {
-                    name: 'User 2'
-                }
-            },
-            fetchPolicy: 'cache-and-network',
-            pollInterval: 5000
-        }
-    },
-    data(){
-        return {
-            comments: []
-        }
-    },
     methods: {
-
+        addComment(){
+            this.$apollo.mutate({
+                mutation: gql`
+                mutation($name: String!, $text: String!) {
+                 createComment(name: $name, text: $text)
+                }
+                `
+                ,
+                variables() {
+                    return {
+                        name: 'Vue',
+                        text: 'Coment from vue'
+                    }
+                }
+                ,
+            })
+        }
     }
 
 })
